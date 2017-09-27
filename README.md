@@ -1,9 +1,9 @@
 # Clustered ToasterService
 Ammended base of the ToasterService to utilise ZooKeeper for clustered deployment in a swarm cluster
 
-# Guide To Deploy Via Docker Swarm
+## Guide To Deploy Via Docker Swarm
 
-## Create Registry In Swarm
+### Create Registry In Swarm
 This is so all nodes in the swarm can pull the image from somewhere.
 
 unless your shell is pointing to a manager node in your cluster, run 
@@ -11,4 +11,4 @@ unless your shell is pointing to a manager node in your cluster, run
 
 We can now continue to building, tagging and pushing to this repository.
 
-## Push Image To Registry
+### Push Image To Registry
