@@ -3,10 +3,7 @@ version: '3'
 services:
 
   toasterservice:
-    image: toasterservice
-    build:
-      context: ./ToasterService.Api
-      dockerfile: Dockerfile
+    image: localhost:5000/toasterservice
     deploy:
       replicas: 5
     depends_on: 
