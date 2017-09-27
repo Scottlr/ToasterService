@@ -1,21 +1,14 @@
-# ToasterService
-An example of embedding an Orleans silo in the same process as an ASP.NET Web API
+# Clustered ToasterService
+Ammended base of the ToasterService to utilise ZooKeeper for clustered deployment in a swarm cluster
 
-The proposal being that this be provided as an add-on to ASP.NET Core:
-`Install-Package Orleans.AspNetCore`
+# Guide To Deploy Via Docker Swarm
 
-Installing said package would also create scaffolding for example grains, similar to in the included demo project.
+## Create Registry In Swarm
+This is so all nodes in the swarm can pull the image from somewhere.
 
-## Please note
-1. This project uses a pre-release build of Orleans for .NET Core, so you will need to add the following to your NuGet feeds list:
-`https://dotnet.myget.org/F/orleans-prerelease/api/v3/index.json`
+unless your shell is pointing to a manager node in your cluster, run 
+`docker-machine ssh {managerNode} "docker service create --name registry --publish 5000:5000 registry"`
 
-2. The solution is configured to build and debug in Docker, but if you don't have Docker installed you can just right click on the `ToasterService.Api` project and select `Debug`.
+We can now continue to building, tagging and pushing to this repository.
 
-## Value
-1. Durable, distributed state
-2. Durable scheduling
-3. Streaming of data from and to the Web API, and across a Web API cluster
-4. SignalR backplane implementation similar to [OrleansR](https://github.com/OrleansContrib/OrleansR) possible
-5. Easier introduction to Orleans for traditional Web API developers
-6. No need to deploy and debug a separate actor hosting process.
+## Push Image To Registry
