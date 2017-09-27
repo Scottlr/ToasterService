@@ -6,8 +6,6 @@ services:
     image: localhost:5000/toasterservice
     deploy:
       replicas: 5
-    depends_on: 
-      - zookeeper
 
   zookeeper:
     image: zookeeper

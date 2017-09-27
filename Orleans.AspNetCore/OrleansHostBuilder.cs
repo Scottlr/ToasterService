@@ -37,6 +37,7 @@ namespace Orleans.AspNetCore
 			var ips = Dns.GetHostAddressesAsync(Dns.GetHostName()).Result;
 			config.Defaults.HostNameOrIPAddress = ips.FirstOrDefault()?.ToString();
 			config.Defaults.PropagateActivityId = true;
+			config.Globals.DeploymentId = "toasterservice";
 		}
 
         public IOrleansHostBuilder UseStartup<TStartup>() where TStartup : IOrleansStartup
