@@ -27,16 +27,17 @@ namespace Orleans.AspNetCore
 
         private static void DefaultConfig(ClusterConfiguration config)
         {
-            config.Defaults.SiloName = "default";
-            config.Globals.LivenessType = GlobalConfiguration.LivenessProviderType.MembershipTableGrain;
-            config.Globals.ReminderServiceType = GlobalConfiguration.ReminderServiceProviderType.ReminderTableGrain;
-            config.Defaults.ProxyGatewayEndpoint = new IPEndPoint(IPAddress.Any, 30000);
-            config.Defaults.Port = 11111;
-            config.Globals.RegisterStorageProvider("Orleans.Storage.MemoryStorage", "Default");
-            config.Defaults.HostNameOrIPAddress = "localhost";
-            config.Globals.SeedNodes.Add(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 11111));
-            config.PrimaryNode = config.Globals.SeedNodes.First();
-        }
+			config.Defaults.SiloName = "default";
+			config.Globals.LivenessType = GlobalConfiguration.LivenessProviderType.ZooKeeper;
+			config.Globals.ReminderServiceType = GlobalConfiguration.ReminderServiceProviderType.Disabled;
+			config.Globals.DataConnectionString = "zookeeper:2181";
+			config.Defaults.ProxyGatewayEndpoint = new IPEndPoint(IPAddress.Any, 30000);
+			config.Defaults.Port = 33333;
+			config.Globals.RegisterStorageProvider("Orleans.Storage.MemoryStorage", "Default");
+			var ips = Dns.GetHostAddressesAsync(Dns.GetHostName()).Result;
+			config.Defaults.HostNameOrIPAddress = ips.FirstOrDefault()?.ToString();
+			config.Defaults.PropagateActivityId = true;
+		}
 
         public IOrleansHostBuilder UseStartup<TStartup>() where TStartup : IOrleansStartup
         {
