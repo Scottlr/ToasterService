@@ -3,11 +3,14 @@ version: '3'
 services:
 
   toasterservice:
-    image: toasterservice.api
+    image: toasterservice
     build:
       context: ./ToasterService.Api
       dockerfile: Dockerfile
-    depends_on: zookeeper
+    deploy:
+      replicas: 5
+    depends_on: 
+      - zookeeper
 
   zookeeper:
     image: zookeeper
